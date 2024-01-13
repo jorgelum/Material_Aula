@@ -432,23 +432,33 @@
 <h2>Problema</h2>
 <p>Na pandemia de covid-19 foi de extrema importância o estudo de modelos para prever o comportamento do vírus em relação a população para poder melhor manejar os recursos. Um dos modelos mais simples para estudo é o SIR.</p>
 <ul>
-<li>Sucetíveis</li>
+<li>Suscetíveis</li>
 <li>Infectados</li>
 <li>Recuperados</li>
 </ul>
 </section>
 <section id="problema-1" class="slide level2">
 <h2>Problema</h2>
-<p>Equacionamento:</p>
-<p><span class="math display">\[ \frac{dS}{dt} = -\beta * S * I \]</span></p>
-<p><span class="math display">\[ \frac{dI}{dt} = \beta * S * I - \lambda * I \]</span></p>
-<p><span class="math display">\[ \frac{dR}{dt} = \lambda * I \]</span></p>
+<p>Equacionamento</p>
+<p><span class="math display">\[
+\frac{dS}{dt} = -\beta*S*I
+\]</span></p>
+<p><span class="math display">\[
+\frac{dI}{dt} = \beta*S*I - \gamma*I
+\]</span></p>
+<p><span class="math display">\[
+\frac{dR}{dt} = \gamma*I
+\]</span></p>
 </section>
 <section id="problema-2" class="slide level2">
 <h2>Problema</h2>
 <p>Lembrando que:</p>
-<p><span class="math display">\[ \beta:taxa \ de \ transmissão\]</span></p>
-<p><span class="math display">\[ \lambda:taxa \ de \ recuperação\]</span></p>
+<p><span class="math display">\[
+\beta : taxa de transmissão
+\]</span></p>
+<p><span class="math display">\[
+\gamma: taxa de recuperação
+\]</span></p>
 </section>
 <section id="problema-3" class="slide level2">
 <h2>Problema</h2>
@@ -474,12 +484,8 @@
 </section>
 <section id="resultados" class="slide level2">
 <h2>Resultados</h2>
-<div class="cell" data-tags="[]" data-execution_count="4">
-<div class="sourceCode cell-code" id="cb4" data-code-line-numbers="|1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1"></a>y <span class="op">=</span> odeint(SIR, y0, t)</span>
-<span id="cb4-2"><a href="#cb4-2"></a>df <span class="op">=</span> pd.DataFrame(data <span class="op">=</span> y, columns<span class="op">=</span>[<span class="st">'S'</span>,<span class="st">'I'</span>,<span class="st">'R'</span>])</span>
-<span id="cb4-3"><a href="#cb4-3"></a>df[<span class="st">'Tempo(dias)'</span>] <span class="op">=</span> t</span>
-<span id="cb4-4"><a href="#cb4-4"></a>df.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="4">
+<div class="cell" data-execution_count="4">
+<div class="cell-output cell-output-display" data-execution_count="24">
 
 <div>
 <style scoped="">
@@ -549,14 +555,18 @@
 </section>
 <section id="gráfico" class="slide level2">
 <h2>Gráfico</h2>
-
-<img data-src="index_files/figure-revealjs/cell-6-output-1.png" class="r-stretch"></section>
+<div class="cell" data-execution_count="5">
+<div class="cell-output cell-output-display">
+<p><img data-src="index_files/figure-revealjs/cell-6-output-1.png" width="663" height="524"></p>
+</div>
+</div>
+</section>
 <section id="conclusão" class="slide level2">
 <h2>Conclusão</h2>
 <p>O scipy é uma excelente biblioteca e tem uma boa interação com o numpy. Com algumas linhas de código é possível resolver problemas complexos além de ser facilmente costumisável.</p>
 </section>
-<section id="referências" class="slide level2">
-<h2>Referências</h2>
+<section id="referência" class="slide level2">
+<h2>Referência</h2>
 <ul>
 <li><a href="https://imef.furg.br/images/stories/Monografias/Matematica_aplicada/2017/AyrtonFarias.pdf">Um estudo da modelagem epidemiológica SIR usando conceitos de derivadas de ordem inteira e fracionária</a></li>
 </ul>

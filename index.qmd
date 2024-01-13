@@ -1,0 +1,144 @@
+---
+title: "Modelagem"
+subtitle: "Entendendo Sistemas Dinâmicos"
+author: "Jorge Luiz Mendes"
+date: "01-02-2024"
+logo: "logo.png"
+format:
+    revealjs:    
+        theme: "mytheme.scss"
+        slide-number: true
+        show-slide-number: all
+        footer: "UNIFESP"
+jupyter: python3
+---
+
+## Introdução
+
+Na engenharia química, as equações diferenciais ordinárias (EDO's) são ferramentas poderosas para modelar e compreender o comportamento de sistemas dinâmicos. 
+
+## Exemplos
+
+* Cinética de Reações
+
+## Exemplos
+
+* Cinética de Reações
+* Balanços de Massa e Energia
+
+## Exemplos
+
+* Cinética de Reações
+* Balanços de Massa e Energia
+* Modelo de Propagação de Doenças 
+
+## Objetivo
+
+A linguagem Python possui excelentes bibliotecas para resolução de edo's. O [Scipy](https://docs.scipy.org/doc/scipy/index.html) é um pacote científico com diversas funcionalidades para resolver sistemas, integrais numéricas, edo's  e entre outras.
+
+## Bibliotecas
+
+```{python}
+
+#|echo: False
+import pandas as pd
+import numpy as np # Algebra
+import matplotlib.pyplot as plt # Gráficos
+from scipy.integrate import odeint # ODE's
+
+```
+
+## Problema
+
+Na pandemia de covid-19 foi de extrema importância o estudo de modelos para prever o comportamento do vírus em relação a população para poder melhor manejar os recursos. Um dos modelos mais simples para estudo é o SIR.
+
+* Suscetíveis
+* Infectados
+* Recuperados
+
+## Problema
+Equacionamento
+$$
+\frac{dS}{dt} = -\beta*S*I
+$$
+$$
+\frac{dI}{dt} = \beta*S*I - \gamma*I
+$$
+$$
+\frac{dR}{dt} = \gamma*I
+$$
+
+## Problema
+Lembrando que:
+$$
+\beta : taxa de transmissão
+$$
+
+$$
+\gamma: taxa de recuperação
+$$
+
+## Problema 
+com o código:
+```{python}
+
+#|echo: true
+#|code-line-numbers: "|5"
+def SIR(y,t):
+    
+    beta = 0.3
+    gamma = 0.1   
+    S, I, R = y
+    dSdt = -beta*S*I
+    dIdt = beta*S*I - gamma*I
+    dRdt = gamma*I
+    return [dSdt, dIdt, dRdt]
+
+```
+**Cuidado com a posição dos argumentos!!!**
+
+## Condições Iniciais
+
+```{python}
+#|echo: true
+S0 = 0.9  # proporção inicial de indivíduos suscetíveis 
+I0 = 0.1  # proporção inicial de indivíduos infectados 
+R0 = 0.0  # proporção inicial de indivíduos recuperados 
+y0 = [S0, I0, R0]
+t = np.linspace(0,100,1001) # intervalo de tempo em dias
+
+```
+## Resultados
+
+```{python}
+#|echo: false
+#|code-line-numbers: "|1"
+y = odeint(SIR, y0, t)
+df = pd.DataFrame(data = y, columns=['S','I','R'])
+df['Tempo(dias)'] = t
+df.head()
+
+```
+## Gráfico
+
+```{python}
+plt.figure(figsize = (8,6) )
+plt.plot(t, df['S'], label='Suscetíveis')
+plt.plot(t, df['I'], label='Infectados')
+plt.plot(t, df['R'], label='Recuperados')
+plt.xlabel('Tempo(dias)')
+plt.ylabel('Proporção da População')
+plt.title('Modelo SIR: Propagação de uma Doença', loc ='left', fontweight = 'bold')
+plt.annotate(text = "S + I + R = 1", xy = (60,0.7 ))
+plt.legend()
+plt.show()
+
+```
+
+## Conclusão
+
+O scipy é uma excelente biblioteca e tem uma boa interação com o numpy. Com algumas linhas de código é possível resolver problemas complexos além de ser facilmente costumisável.
+
+## Referência
+
+* [Um estudo da modelagem epidemiológica SIR usando conceitos de derivadas de ordem inteira e fracionária](https://imef.furg.br/images/stories/Monografias/Matematica_aplicada/2017/AyrtonFarias.pdf)
